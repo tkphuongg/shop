@@ -15,3 +15,4 @@ public interface ProductRepo extends JpaRepository<Product, String> {
     Product findByName(@Nullable String name);
     List<Product> findByIdIn(List<String> idList);
 }
+

@@ -1,6 +1,7 @@
 package io.getarrays.contactapi.resource;
 
 import io.getarrays.contactapi.domain.Order;
+import io.getarrays.contactapi.domain.Status;
 import io.getarrays.contactapi.repo.ItemToBuyRepo;
 import io.getarrays.contactapi.repo.OrderRepo;
 import io.getarrays.contactapi.repo.ProductRepo;
@@ -53,6 +54,18 @@ public class OrderController {
     @DeleteMapping(path = "/{customerId}/{orderId}")
     public String cancelOrders(@PathVariable String customerId, @PathVariable String orderId){
         return this.orderService.cancelOrder(orderId);
+    }
+
+    @PutMapping(path = "/{orderId}")
+    public Order processOrder(@PathVariable String orderId){
+        Optional<Order> orderOptional = this.orderRepo.findByOrderId(orderId);
+        if(orderOptional.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found");
+        }
+        Order order = orderOptional.get();
+        order.setStatus(Status.processed);
+        orderRepo.save(order);
+        return order;
     }
 
 
