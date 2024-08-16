@@ -56,6 +56,17 @@ public class OrderController {
         return this.orderService.cancelOrder(orderId);
     }
 
+    @DeleteMapping(path = "/{orderId}")
+    public String deleteOrder(@PathVariable String orderId){
+        Optional<Order> orderToDeleteOptional = this.orderRepo.findByOrderId(orderId);
+        if(orderToDeleteOptional.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found");
+        }
+        Order orderToDelete = orderToDeleteOptional.get();
+        this.orderRepo.delete(orderToDelete);
+        return "Order deleted";
+    }
+
     @PutMapping(path = "/{orderId}")
     public Order processOrder(@PathVariable String orderId){
         Optional<Order> orderOptional = this.orderRepo.findByOrderId(orderId);
