@@ -35,7 +35,6 @@ public class OrderService {
         if (myOrderOptional.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found");
         }
-
         Order myOrder = myOrderOptional.get();
         if (myOrder.getStatus() == Status.processed) {
             throw new RuntimeException("Cannot cancel order");
@@ -43,10 +42,11 @@ public class OrderService {
 
         List<String> itemsToOrder = myOrder.getOrderedItems();
         for (String s : itemsToOrder) {
-            int quantItem = this.itemToBuyRepo.findById(s).get().getQuantity();
-            int quantInventory = this.productRepo.findById(s).get().getQuantity();
-            this.productRepo.findById(s).get().setQuantity(quantInventory + quantItem);
-            this.itemToBuyRepo.delete(this.itemToBuyRepo.findById(s).get());
+            ItemToBuy itemInCart = this.itemToBuyRepo.findById(s).get();
+            int quantItem = itemInCart.getQuantity();
+            int quantInventory = this.productRepo.findById(itemInCart.getProductId()).get().getQuantity();
+            this.productRepo.findById(itemInCart.getProductId()).get().setQuantity(quantInventory + quantItem);
+            this.itemToBuyRepo.delete(itemInCart);
         }
         this.orderRepo.delete(myOrder);
         return "Order cancelled";

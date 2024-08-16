@@ -9,19 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Optional;
-import java.util.function.BiFunction;
-import java.util.function.Function;
-
-
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
-
 
 @Service
 @Slf4j
@@ -48,10 +35,6 @@ public class ProductService {
     }
 
 }
-
-
-
-
 
 
 

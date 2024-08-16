@@ -11,7 +11,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
-//@RequiredArgsConstructor
 public class ProductResource {
     //private final ProductService productService;
 
@@ -24,7 +23,6 @@ public class ProductResource {
     @GetMapping
     public Iterable<Product> getAllProducts(){
         return productRepo.findAll();
-        //return allProds;
     }
 
     @PostMapping(path = "/addNew")
@@ -34,7 +32,6 @@ public class ProductResource {
         System.out.println("Product added");
         return newProduct;
     }
-
 
     @DeleteMapping(path = "/delete/{id}")
     public String deleteProduct(@PathVariable String id){
@@ -62,37 +59,5 @@ public class ProductResource {
         return productToUpdate;
 
     }
-
-//    @PostMapping
-//    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-//        //return ResponseEntity.ok().body(productService.createContact(product));
-//        return ResponseEntity.created(URI.create("/product/userID")).body(productService.createProduct(product));
-//    }
-
-//    @GetMapping
-//    public ResponseEntity<Page<Product>> getProduct(@RequestParam(value = "page", defaultValue = "0") int page,
-//                                                     @RequestParam(value = "size", defaultValue = "10") int size) {
-//        return ResponseEntity.ok().body(productService.getAllProducts(page, size));
-//    }
-
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Product> getProduct(@PathVariable(value = "id") String id) {
-//        return ResponseEntity.ok().body(productService.getProduct(id));
-//    }
-
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deleteProduct(@PathVariable(value = "id") String id) {
-//        productService.deleteProduct(id);
-//        return ResponseEntity.noContent().build();
-//    }
-
-
-
-//    @RequestMapping(value = "/{id}", method = DELETE)
-//    @ResponseBody
-//    public String deleteFile(@PathVariable("id") String id) {
-//        productService.deleteProduct(id);
-//        return "File deleted ";
-//    }
 
 }
